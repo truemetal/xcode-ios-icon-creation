@@ -2,61 +2,70 @@
 import Foundation
 
 let currentPath = NSFileManager.defaultManager().currentDirectoryPath
-let defaultSourceIconPath = currentPath.stringByAppendingPathComponent("icon.png")
-let iconResolutions = [29, 40, 58, 76, 80, 87, 120, 152, 180]
+let defaultSourceIconPath = NSURL.fileURLWithPath(currentPath).URLByAppendingPathComponent("icon.png")
+let iconResolutions = [29, 40, 48, 50, 55, 57, 58, 60, 72, 76, 80, 87, 88, 100, 114, 120, 144, 152, 167, 171, 172, 180, 196]
 
-func outputDirPathForIconPath(iconPath: String) -> String
+extension String { subscript(pos: Int) -> String { return String(characters[startIndex.advancedBy(0)]) } }
+
+func outputDirPathForIconPath(iconPath: NSURL) -> NSURL
 {
-    return iconPath.stringByDeletingLastPathComponent.stringByAppendingPathComponent("\(iconPath.lastPathComponent.stringByDeletingPathExtension)_output")
+    let iconName = iconPath.URLByDeletingPathExtension?.lastPathComponent
+    let parentPath = iconPath.URLByDeletingLastPathComponent
+    return parentPath!.URLByAppendingPathComponent("\(iconName!)_output")
 }
 
-func scaleIcon(iconPath: String, resolution: Int)
+func scaleIcon(iconPath: NSURL, resolution: Int)
 {
     let task = NSTask()
     task.launchPath = "/usr/bin/sips"
-    task.arguments = ["-Z", "\(resolution)", iconPath]
+    task.arguments = ["-Z", "\(resolution)", iconPath.path!]
     task.launch()
+    task.waitUntilExit()
 }
 
-func createIconsForFilePaths(filePaths : Array<String>)
+func createIconsForFilePaths(filePaths : Array<NSURL>)
 {
     var failedInputsCheck = false
     for filePath in filePaths
     {
-        if NSFileManager.defaultManager().fileExistsAtPath(filePath) == false {
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath.path!) == false {
             failedInputsCheck = true
-            println("Issue: file does not exist \(filePath)")
+            print("Issue: file does not exist \(filePath)")
         }
         
-        if NSFileManager.defaultManager().fileExistsAtPath(outputDirPathForIconPath(filePath)) {
+        if NSFileManager.defaultManager().fileExistsAtPath(outputDirPathForIconPath(filePath).path!) {
             failedInputsCheck = true
-            println("Issue: this directory exists and will be re-written \(outputDirPathForIconPath(filePath))")
+            print("Issue: this directory exists and will be re-written \(outputDirPathForIconPath(filePath))")
         }
     }
     
     if failedInputsCheck { return }
     
-    for iconPath in filePaths
-    {
-        println("Processing file: \(iconPath)")
-        
-        let outputDir = outputDirPathForIconPath(iconPath)
-        NSFileManager.defaultManager().createDirectoryAtPath(outputDir, withIntermediateDirectories: false, attributes: nil, error: nil)
-        
-        for resolution in iconResolutions
-        {
-            let targetIconPath = outputDir.stringByAppendingPathComponent("icon-\(resolution).png")
-            NSFileManager.defaultManager().copyItemAtPath(iconPath, toPath: targetIconPath, error:nil)
-            
-            scaleIcon(targetIconPath, resolution)
-        }
-    }
-}
-
-extension String {
-    // string[i] -> one string char
-    subscript(pos: Int) -> String { return String(Array(self)[min(self.length-1,max(0,pos))]) }
-    var length: Int { return countElements(self) }
+	for iconPath in filePaths
+	{
+		print("Processing file: \(iconPath)")
+	
+		let outputDir = outputDirPathForIconPath(iconPath)
+	
+		do {
+			try NSFileManager.defaultManager().createDirectoryAtPath(outputDir.path!, withIntermediateDirectories: false, attributes: nil)
+		} catch {
+			print("Error creating image folder")
+		}
+	
+	
+		for resolution in iconResolutions
+		{
+			let targetIconPath = outputDir.URLByAppendingPathComponent("icon-\(resolution).png")
+			do {
+				try NSFileManager.defaultManager().copyItemAtPath(iconPath.path!, toPath: targetIconPath.path!)
+			} catch {
+				print("Error copying images")
+			}
+		
+			scaleIcon(targetIconPath, resolution: resolution)
+		}
+	}
 }
 
 // =======
@@ -66,17 +75,17 @@ if Process.arguments.count > 1
     var inputFilenames = Process.arguments
     inputFilenames.removeAtIndex(0)
     
-    var filePathsArr = Array<String>()
+    var filePathsArr = Array<NSURL>()
     
     for filename in inputFilenames
     {
-        if filename[0] == "/" {
-            filePathsArr.append(filename)
+        if filename[0]  == "/" {
+            filePathsArr.append(NSURL.fileURLWithPath(filename))
             continue
         }
         
-        if filename[0] == "~" {
-            filePathsArr.append(filename.stringByExpandingTildeInPath)
+        if filename[0]  == "~" {
+            filePathsArr.append(NSURL.fileURLWithPath(filename))
             continue
         }
         
@@ -84,7 +93,7 @@ if Process.arguments.count > 1
         let fileUrl = NSURL(string: filename, relativeToURL: NSURL(fileURLWithPath: currentPath))
         if let u = fileUrl {
             if let p = u.path {
-                filePathsArr.append(p)
+                filePathsArr.append(NSURL.fileURLWithPath(p))
             }
         }
     }
