@@ -2,56 +2,49 @@
 import Foundation
 import AppKit
 
+extension String {
+    subscript(pos: Int) -> String { return String(characters[startIndex.advancedBy(0)]) }
+}
+
 func scaleIcon(iconPath: String, resolution: Int)
 {
     let task = NSTask()
     task.launchPath = "/usr/bin/sips"
     task.arguments = ["-Z", "\(resolution)", iconPath]
     task.launch()
+    task.waitUntilExit()
 }
 
-func copyAndScaleImage(sourceIconPath: String, desctinationIconPath: String, newResolution: Int)
+func copyAndScaleImage(sourceIconPath: String, desctinationIconPath: String, newResolution: Int) throws
 {
     if NSFileManager.defaultManager().fileExistsAtPath(desctinationIconPath) {
-        println("icon \(desctinationIconPath.lastPathComponent) already exists; skipping.")
+        print("icon \((desctinationIconPath as NSString).lastPathComponent) already exists; skipping.")
     }
     else {
-        NSFileManager.defaultManager().copyItemAtPath(sourceIconPath, toPath: desctinationIconPath, error: nil)
-        scaleIcon(desctinationIconPath, Int(newResolution))
+        try NSFileManager.defaultManager().copyItemAtPath(sourceIconPath, toPath: desctinationIconPath)
+        scaleIcon(desctinationIconPath, resolution: Int(newResolution))
     }
-}
-
-extension String {
-    // string[i] -> one string char
-    subscript(pos: Int) -> String { return String(Array(self)[min(self.length-1,max(0,pos))]) }
-    var length: Int { return countElements(self) }
 }
 
 // =======
 
-func doTheJob()
+let predicate = NSPredicate(format : "self endswith '@3x.png'")
+let filePaths = try NSFileManager.defaultManager().subpathsOfDirectoryAtPath(NSFileManager.defaultManager().currentDirectoryPath)
+
+let imagePaths = (filePaths as NSArray).filteredArrayUsingPredicate(predicate)
+
+for filePath in imagePaths as! [String]
 {
-    let predicate = NSPredicate(format : "SELF EndsWith '@3x.png'")
-    var filePaths = NSFileManager.defaultManager().subpathsOfDirectoryAtPath(NSFileManager.defaultManager().currentDirectoryPath, error: nil) as NSArray?
-    
-    if filePaths == nil || predicate == nil { return }
-    filePaths = filePaths!.filteredArrayUsingPredicate(predicate!)
-    
-    for filePath : String in filePaths as Array<String>
+    if let img = NSImage(contentsOfFile: filePath)
     {
-        if let img = NSImage(contentsOfFile: filePath)
-        {
-            let icon2xPath = filePath.stringByReplacingOccurrencesOfString("@3x.png", withString: "@2x.png", options: nil, range: nil)
-            let icon1xPath = filePath.stringByReplacingOccurrencesOfString("@3x.png", withString: ".png", options: nil, range: nil)
-            
-            // note: by default, NSImage would assume scale of 3 for @3x images, hence size would be already in points
-            let icon1xResolution = Int(img.size.width)
-            let icon2xResolution = Int(img.size.width * 2)
-            
-            copyAndScaleImage(filePath, icon1xPath, icon1xResolution)
-            copyAndScaleImage(filePath, icon2xPath, icon2xResolution)
-        }
+        let icon2xPath = filePath.stringByReplacingOccurrencesOfString("@3x.png", withString: "@2x.png", options: NSStringCompareOptions(rawValue:0), range: nil)
+        let icon1xPath = filePath.stringByReplacingOccurrencesOfString("@3x.png", withString: ".png", options: NSStringCompareOptions(rawValue:0), range: nil)
+        
+        // note: by default, NSImage would assume scale of 3 for @3x images, hence size would be already in points
+        let icon1xResolution = Int(img.size.width)
+        let icon2xResolution = Int(img.size.width * 2)
+        
+        try copyAndScaleImage(filePath, desctinationIconPath:icon1xPath, newResolution:icon1xResolution)
+        try copyAndScaleImage(filePath, desctinationIconPath:icon2xPath, newResolution:icon2xResolution)
     }
 }
-
-doTheJob()

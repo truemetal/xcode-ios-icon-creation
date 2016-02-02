@@ -5,7 +5,9 @@ let currentPath = NSFileManager.defaultManager().currentDirectoryPath
 let defaultSourceIconPath = NSURL.fileURLWithPath(currentPath).URLByAppendingPathComponent("icon.png")
 let iconResolutions = [29, 40, 48, 50, 55, 57, 58, 60, 72, 76, 80, 87, 88, 100, 114, 120, 144, 152, 167, 171, 172, 180, 196]
 
-extension String { subscript(pos: Int) -> String { return String(characters[startIndex.advancedBy(0)]) } }
+extension String {
+    subscript(pos: Int) -> String { return String(characters[startIndex.advancedBy(0)]) }
+}
 
 func outputDirPathForIconPath(iconPath: NSURL) -> NSURL
 {
