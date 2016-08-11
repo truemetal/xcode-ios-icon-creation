@@ -24,7 +24,7 @@ for Mac app icons supply `-mac` param like so:
 
 **Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb)**
 
-![create app icons demo](https://cloud.githubusercontent.com/assets/2472186/14762850/bce1719e-098d-11e6-93d6-e1f8e78d2d83.gif)
+![create app icons demo](make_icons demo.gif)
 
 **Instruction to populate your `AppIcon.appiconset`**
 
