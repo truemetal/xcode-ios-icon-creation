@@ -22,12 +22,12 @@ where icon_name is relative or full path to the file
 for Mac app icons supply `-mac` param like so: 
 `make_icons.swift -mac <icon_name(s)>`
 
-**Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb)**
+**Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb); please view the .gif in browser other then safari **
 
 ![create app icons demo](make_icons demo.gif)
 
 **Instruction to populate your `AppIcon.appiconset`**
 
 1. Manually copy generated icon files from make_icons output folder to `.appiconset` folder
-2. Replace contents of `Contents.json` with contents of [sampleContents.json](sampleContents.json) and all the icons would be picked up by xcode, no need for dragging and dropping each one individually
+2. Replace contents of `Contents.json` with contents of [sampleContents.json](sampleContents.json) or [sampleContents macos.json](sampleContents macos.json) and all the icons would be picked up by xcode, no need for dragging and dropping each one individually
 3. Enjoy :)
