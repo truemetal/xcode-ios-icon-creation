@@ -19,6 +19,9 @@ You can place the script into your `/usr/bin` to run it like `make_icons.swift`;
 `make_icons.swift <icon_name(s)>`
 where icon_name is relative or full path to the file
 
+for Mac app icons supply `-mac` param like so: 
+`make_icons.swift -mac <icon_name(s)>`
+
 **Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb)**
 
 ![create app icons demo](https://cloud.githubusercontent.com/assets/2472186/14762850/bce1719e-098d-11e6-93d6-e1f8e78d2d83.gif)
