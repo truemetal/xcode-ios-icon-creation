@@ -22,7 +22,7 @@ where icon_name is relative or full path to the file
 for Mac app icons supply `-mac` param like so: 
 `make_icons.swift -mac <icon_name(s)>`
 
-**Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb); please view the .gif in browser other then safari **
+**Demo of updating all your app icon sizes in less then a minute (.gif, 4.5mb); please view the .gif in browser other then safari**
 
 ![create app icons demo](make_icons demo.gif)
 
