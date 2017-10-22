@@ -9,6 +9,7 @@ let iwatchResolutions = [("iwatch-24@2x", 48), ("iwatch-27.5@2x", 55), ("iwatch-
 let iphoneNotificationResolutions = [("iphone-notification@2x", 40), ("iphone-notification@3x", 60)]
 let ipadNotificationResolutions = [("ipad-notification@1x", 20), ("ipad-notification@2x", 40)]
 let macResolutions = [("mac-16", 16), ("mac-16@2x", 32), ("mac-32", 32), ("mac-32@2x", 64), ("mac-128", 128), ("mac-128@2x", 256), ("mac-256", 256), ("mac-256@2x", 512), ("mac-512", 512), ("mac-512@2x", 1024)]
+let marketingResolutions = [("iwatch-1024", 1024), ("ios-1024", 1024)]
 
 extension String {
     subscript(pos: Int) -> String {
@@ -71,6 +72,7 @@ func createIconsForFilePaths(filePaths : Array<URL>)
             makeIconsForResolutionsArr(resolutionsArr: iwatchResolutions, iconPath:iconPath, outputDir:outputDir)
             makeIconsForResolutionsArr(resolutionsArr: iphoneNotificationResolutions, iconPath:iconPath, outputDir:outputDir)
             makeIconsForResolutionsArr(resolutionsArr: ipadNotificationResolutions, iconPath:iconPath, outputDir:outputDir)
+            makeIconsForResolutionsArr(resolutionsArr: marketingResolutions, iconPath:iconPath, outputDir:outputDir)
         }
         else {
             makeIconsForResolutionsArr(resolutionsArr: macResolutions, iconPath:iconPath, outputDir:outputDir)

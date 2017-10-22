@@ -163,6 +163,18 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "watch-marketing",
+      "filename" : "icon-iwatch-1024.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "icon-ios-1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {
