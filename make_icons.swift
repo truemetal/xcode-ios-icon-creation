@@ -18,15 +18,13 @@ extension String {
     }
 }
 
-func outputDirPathForIconPath(iconPath: URL) -> URL
-{
+func outputDirPathForIconPath(iconPath: URL) -> URL {
     let iconName = iconPath.deletingPathExtension().lastPathComponent
     let parentPath = iconPath.deletingLastPathComponent()
     return parentPath.appendingPathComponent("\(iconName)_output")
 }
 
-func scaleIcon(iconPath: URL, resolution: Int)
-{
+func scaleIcon(iconPath: URL, resolution: Int) {
     let task = Process()
     task.launchPath = "/usr/bin/sips"
     task.arguments = ["-Z", "\(resolution)", iconPath.path]
@@ -35,11 +33,9 @@ func scaleIcon(iconPath: URL, resolution: Int)
 }
 
 var macMode = false
-func createIconsForFilePaths(filePaths : Array<URL>)
-{
+func createIconsForFilePaths(filePaths : Array<URL>) {
     var failedInputsCheck = false
-    for filePath in filePaths
-    {
+    for filePath in filePaths {
         if FileManager.default.fileExists(atPath: filePath.path) == false {
             failedInputsCheck = true
             print("Issue: file does not exist \(filePath)")
@@ -53,8 +49,7 @@ func createIconsForFilePaths(filePaths : Array<URL>)
     
     if failedInputsCheck { return }
     
-    for iconPath in filePaths
-    {
+    for iconPath in filePaths {
         print("Processing file: \(iconPath)")
         
         let outputDir = outputDirPathForIconPath(iconPath: iconPath)
@@ -65,8 +60,7 @@ func createIconsForFilePaths(filePaths : Array<URL>)
             print("Error creating image folder")
         }
         
-        if macMode == false
-        {
+        if macMode == false {
             makeIconsForResolutionsArr(resolutionsArr: iphone7AndLaterResolutions, iconPath:iconPath, outputDir:outputDir)
             makeIconsForResolutionsArr(resolutionsArr: ipad7AndLaterResolutions, iconPath:iconPath, outputDir:outputDir)
             makeIconsForResolutionsArr(resolutionsArr: iwatchResolutions, iconPath:iconPath, outputDir:outputDir)
@@ -80,10 +74,8 @@ func createIconsForFilePaths(filePaths : Array<URL>)
     }
 }
 
-func makeIconsForResolutionsArr(resolutionsArr:[(String,Int)], iconPath:URL, outputDir:URL)
-{
-    for (prefix, resolution) in resolutionsArr
-    {
+func makeIconsForResolutionsArr(resolutionsArr:[(String,Int)], iconPath:URL, outputDir:URL) {
+    for (prefix, resolution) in resolutionsArr {
         let targetIconPath = outputDir.appendingPathComponent("icon-\(prefix).png")
         do {
             try FileManager.default.copyItem(atPath: iconPath.path, toPath: targetIconPath.path)
@@ -99,14 +91,15 @@ func makeIconsForResolutionsArr(resolutionsArr:[(String,Int)], iconPath:URL, out
 
 var arguments = CommandLine.arguments
 arguments.remove(at: 0) // remove binary name
-arguments = arguments.filter { if $0 == "-mac" { macMode = true; return false } else { return true } }
+arguments = arguments.filter {
+    if $0 == "-mac" { macMode = true; return false }
+    else { return true }
+}
 
-if arguments.count > 1
-{
+if arguments.count > 1 {
     var filePathsArr = Array<URL>()
     
-    for filename in arguments
-    {
+    for filename in arguments {
         if filename[0]  == "/" {
             filePathsArr.append(URL(fileURLWithPath: filename))
             continue
@@ -124,7 +117,6 @@ if arguments.count > 1
     
     createIconsForFilePaths(filePaths: filePathsArr)
 }
-else
-{
+else {
     createIconsForFilePaths(filePaths: [defaultSourceIconPath])
 }
