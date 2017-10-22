@@ -1,5 +1,7 @@
 ### scale_artworks 
 
+**TL;DR - create `@2x` and `@1x` versions for `filename@3x.png` in current folder**
+
 This script looks for @3x.png files in the directory you're running it from, and makes @2x and @1x versions automatically. 
 
 You can place the script into your `/usr/bin` to run it like `scale_artworks.swift`; otherwise specify full/relative path to script e.g. `./scale_artworks.swift`. You can also freely remove `.swift` extension. 
@@ -8,7 +10,11 @@ You can place the script into your `/usr/bin` to run it like `scale_artworks.swi
 
 In terminal, cd to folder with artworks and run `scale_artworks.swift` or copy the script to the folder and run `./scale_artworks.swift`
 
+---
+
 ### make_icons
+
+**TL;DR - provide app icon in 1024x1024 and get all the other resolutions**
 
 This tiny script can save you a great deal of time creating `AppIcon.appiconset` icons for your iOS app. Just run the script in your console and it will automatically create icons in all resolutions that you can use in your Xcode iOS project. 
 
