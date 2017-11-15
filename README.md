@@ -35,5 +35,5 @@ for Mac app icons supply `-mac` param like so:
 **Instruction to populate your `AppIcon.appiconset`**
 
 1. Manually copy generated icon files from make_icons output folder to `.appiconset` folder
-2. Replace contents of `Contents.json` with contents of [sampleContents.json](sampleContents.json) or [sampleContents macos.json](sampleContents macos.json) and all the icons would be picked up by xcode, no need for dragging and dropping each one individually
+2. Replace contents of `Contents.json` with contents of [sampleContents.json](sampleContents.json) or [sampleContents macos.json](sampleContents%20macos.json) and all the icons would be picked up by xcode, no need for dragging and dropping each one individually
 3. Enjoy :)
