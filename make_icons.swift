@@ -13,7 +13,7 @@ let marketingResolutions = [("iwatch-1024", 1024), ("ios-1024", 1024)]
 
 extension String {
     subscript(pos: Int) -> String {
-        guard pos >= 0 && pos < characters.count else { return "" }
+        guard pos >= 0 && pos < count else { return "" }
         return String(self[index(startIndex, offsetBy: pos)])
     }
 }
