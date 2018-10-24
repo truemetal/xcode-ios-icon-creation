@@ -1,14 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
       "filename" : "icon-iphone-notification@2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
       "filename" : "icon-iphone-notification@3x.png",
       "scale" : "3x"
     },
@@ -49,14 +49,14 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
       "filename" : "icon-ipad-notification@1x.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "20x20",
+      "idiom" : "ipad",
       "filename" : "icon-ipad-notification@2x.png",
       "scale" : "2x"
     },
@@ -103,6 +103,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "icon-ios-1024.png",
+      "scale" : "1x"
+    },
+    {
       "size" : "24x24",
       "idiom" : "watch",
       "filename" : "icon-iwatch-24@2x.png",
@@ -145,8 +151,16 @@
       "idiom" : "watch",
       "filename" : "icon-iwatch-44@2x.png",
       "scale" : "2x",
-      "role" : "longLook",
-      "subtype" : "42mm"
+      "role" : "appLauncher",
+      "subtype" : "40mm"
+    },
+    {
+      "size" : "50x50",
+      "idiom" : "watch",
+      "filename" : "icon-iwatch-50@2x.png",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "44mm"
     },
     {
       "size" : "86x86",
@@ -165,15 +179,17 @@
       "subtype" : "42mm"
     },
     {
-      "size" : "1024x1024",
-      "idiom" : "watch-marketing",
-      "filename" : "icon-iwatch-1024.png",
-      "scale" : "1x"
+      "size" : "108x108",
+      "idiom" : "watch",
+      "filename" : "icon-iwatch-108@2x.png",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "44mm"
     },
     {
       "size" : "1024x1024",
-      "idiom" : "ios-marketing",
-      "filename" : "icon-ios-1024.png",
+      "idiom" : "watch-marketing",
+      "filename" : "icon-iwatch-1024.png",
       "scale" : "1x"
     }
   ],
